@@ -23,6 +23,10 @@ public class MatrixBot {
     public static int[][] coAuthorMatrix=new int[270][270];
     public static int[][] muCitationMatrix=new int[270][270];
     public static int[][] coCitationMatrix=new int[270][270];
+    public static double[][] allMatrix=new double[270][270];
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -47,6 +51,7 @@ public class MatrixBot {
                 coAuthorMatrix[i][j]=0;
                 muCitationMatrix[i][j]=0;
                 coCitationMatrix[i][j]=0;
+                allMatrix[i][j]=0;
             }
         }
     }
@@ -65,6 +70,17 @@ public class MatrixBot {
                 }
             }
         }
+        
+        double a = 0.5;
+        double b = 0.25;
+        double c = 0.25;
+        
+        for(int i=0;i<270;i++){
+            for(int j=0;j<270;j++){
+                allMatrix[i][j] = a*coAuthorMatrix[i][j]+ b*muCitationMatrix[i][j] + c*coCitationMatrix[i][j];
+            }
+        }
+        
     }
     
     public static void print() throws FileNotFoundException, UnsupportedEncodingException{
@@ -72,6 +88,7 @@ public class MatrixBot {
         PrintWriter wr1 = new PrintWriter("coAuthorMatrix.txt", "UTF-8");
         PrintWriter wr2 = new PrintWriter("muCitationMatrix.txt", "UTF-8");
         PrintWriter wr3 = new PrintWriter("coCitationMatrix.txt", "UTF-8");
+        PrintWriter wr4 = new PrintWriter("thirdMatrix.txt", "UTF-8");
         
         for(int i=0;i<270;i++){
             for(int j=0;j<270;j++){
@@ -81,14 +98,18 @@ public class MatrixBot {
                 wr2.print(" ");
                 wr3.print(coCitationMatrix[i][j]);
                 wr3.print(" ");
+                wr4.print(allMatrix[i][j]);
+                wr4.print(" ");
             }
             wr1.println("");
             wr2.println("");
             wr3.println("");
+            wr4.println("");
         }
         wr1.close();
         wr2.close();
         wr3.close();
+        wr4.close();
     }
     
     public static void coAuthor(String filename) throws FileNotFoundException, IOException{
